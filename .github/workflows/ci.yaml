@@ -1,0 +1,42 @@
+name: ci
+
+on:
+  workflow_dispatch:
+  # 每天 6:00 (UTC+8) 触发一次
+  schedule:
+    - cron: '0 14 * * *'
+  push:
+    branches:
+      - main
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Add token
+        uses: actions/checkout@v4
+        with:
+          repository: peiyingyao/peiyingyao
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set variables
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          echo "BUILDTIME=$(TZ=Asia/Shanghai date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
+          echo "REPODIR=$PWD" >> $GITHUB_ENV
+          echo "::debug"
+
+      - name: Mirror the GitHub repos to Gitee
+        uses: Yikun/hub-mirror-action@master
+        with:
+          src: github/peiyingyao
+          dst: gitee/peiyingyao
+          dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+          dst_token: ${{ secrets.GITEE_TOKEN }}
+          static_list: Microsoft-Activation-Scripts
+          force_update: true
+          debug: true
+          timeout: 60
