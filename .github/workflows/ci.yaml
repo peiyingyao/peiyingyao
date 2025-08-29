@@ -39,4 +39,4 @@ jobs:
           static_list: fork-fonts
           force_update: true
           debug: true
-          timeout: 60
+          timeout: 20
