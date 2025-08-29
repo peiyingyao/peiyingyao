@@ -39,4 +39,5 @@ jobs:
           static_list: fork-fonts
           force_update: true
           debug: true
-          timeout: 20
+          timeout: 10
+          api_timeout: 10
