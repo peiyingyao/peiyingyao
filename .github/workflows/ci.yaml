@@ -32,11 +32,11 @@ jobs:
       - name: Mirror the GitHub repos to Gitee
         uses: Yikun/hub-mirror-action@master
         with:
-          src: github/massgravel
+          src: github/peiyingyao
           dst: gitee/peiyingyao
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}
-          static_list: Microsoft-Activation-Scripts
+          static_list: fork-fonts
           force_update: true
           debug: true
           timeout: 60
