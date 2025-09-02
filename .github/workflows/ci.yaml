@@ -26,7 +26,7 @@ on:
   #     - main
 
 jobs:
-  main:
+  massgravel:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -57,4 +57,4 @@ jobs:
           force_update: ${{ github.event.inputs.repos_mirror_force_update }}
           debug: true
           timeout: 10
-          api_timeout: 10
+          api_timeout: 60
