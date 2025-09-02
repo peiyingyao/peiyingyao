@@ -15,6 +15,7 @@ on:
       repos_mirror_mappings:
         default:
       repos_mirror_force_update:
+        type: boolean
         required: true
         default: true
   # 每天 6:10 (UTC+8) 触发一次
