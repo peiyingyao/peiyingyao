@@ -2,7 +2,7 @@ name: ci
 
 on:
   workflow_dispatch:
-    input:
+    inputs:
       github_owner:
         required: true
         default: massgravel
@@ -13,7 +13,6 @@ on:
         required: true
         default: Microsoft-Activation-Scripts,massgrave.dev,activated.win,get.activated.win
       repos_mirror_mappings:
-        required: true
         default:
       repos_mirror_force_update:
         required: true
@@ -52,9 +51,9 @@ jobs:
           dst: gitee/${{ inputs.gitee_owner }}
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}
-          static_list: ${{ input.repos_mirror_list }}
-          mappings: ${{ input.repos_mirror_mappings }}
-          force_update: ${{ input.repos_mirror_force_update }}
+          static_list: ${{ inputs.repos_mirror_list }}
+          mappings: ${{ inputs.repos_mirror_mappings }}
+          force_update: ${{ inputs.repos_mirror_force_update }}
           debug: true
           timeout: 10
           api_timeout: 10
