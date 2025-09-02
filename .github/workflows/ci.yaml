@@ -2,22 +2,6 @@ name: ci
 
 on:
   workflow_dispatch:
-    inputs:
-      github_owner:
-        required: true
-        default: massgravel
-      gitee_owner:
-        required: true
-        default: peiyingyao
-      repos_mirror_list:
-        required: true
-        default: Microsoft-Activation-Scripts,massgrave.dev,activated.win,get.activated.win
-      repos_mirror_mappings:
-        default:
-      repos_mirror_force_update:
-        type: boolean
-        required: true
-        default: true
   # 每天 6:10 (UTC+8) 触发一次
   # schedule:
   #   - cron: '10 14 * * *'
@@ -43,18 +27,23 @@ jobs:
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           echo "BUILDTIME=$(TZ=Asia/Shanghai date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
           echo "REPODIR=$PWD" >> $GITHUB_ENV
+          echo "GITHUB_OWNER=massgravel" >> $GITHUB_ENV
+          echo "GITEE_OWNER=peiyingyao" >> $GITHUB_ENV
+          echo "REPOS_MIRROR_LIST=Microsoft-Activation-Scripts,massgrave.dev,activated.win,get.activated.win" >> $GITHUB_ENV
+          echo "REPOS_MIRROR_MAPPINGS=" >> $GITHUB_ENV
+          echo "REPOS_MIRROR_FORCE_UPDATE=true" >> $GITHUB_ENV
           echo "::debug"
 
       - name: Mirror repositories to Gitee
         uses: Yikun/hub-mirror-action@master
         with:
-          src: github/${{ github.event.inputs.github_owner }}
-          dst: gitee/${{ github.event.inputs.gitee_owner }}
+          src: github/${{ env.GITHUB_OWNER }}
+          dst: gitee/${{ env.GITEE_OWNER }}
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}
-          static_list: ${{ github.event.inputs.repos_mirror_list }}
-          mappings: ${{ github.event.inputs.repos_mirror_mappings }}
-          force_update: ${{ github.event.inputs.repos_mirror_force_update }}
+          static_list: ${{ env.REPOS_MIRROR_LIST }}
+          mappings: ${{ env.REPOS_MIRROR_MAPPINGS }}
+          force_update: ${{ env.REPOS_MIRROR_FORCE_UPDATE }}
           debug: true
           timeout: 10
           api_timeout: 60
