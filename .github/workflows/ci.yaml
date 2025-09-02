@@ -47,13 +47,13 @@ jobs:
       - name: Mirror repositories to Gitee
         uses: Yikun/hub-mirror-action@master
         with:
-          src: github/${{ inputs.github_owner }}
-          dst: gitee/${{ inputs.gitee_owner }}
+          src: github/${{ github.event.inputs.github_owner }}
+          dst: gitee/${{ github.event.inputs.gitee_owner }}
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}
-          static_list: ${{ inputs.repos_mirror_list }}
-          mappings: ${{ inputs.repos_mirror_mappings }}
-          force_update: ${{ inputs.repos_mirror_force_update }}
+          static_list: ${{ github.event.inputs.repos_mirror_list }}
+          mappings: ${{ github.event.inputs.repos_mirror_mappings }}
+          force_update: ${{ github.event.inputs.repos_mirror_force_update }}
           debug: true
           timeout: 10
           api_timeout: 10
