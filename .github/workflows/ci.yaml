@@ -14,12 +14,16 @@ on:
         default: Microsoft-Activation-Scripts,massgrave.dev,activated.win,get.activated.win
       repos_mirror_mappings:
         default:
+      repos_mirror_force_update:
+        type: boolean
+        required: true
+        default: true
   # 每天 6:10 (UTC+8) 触发一次
-  schedule:
-    - cron: '10 14 * * *'
-  push:
-    branches:
-      - main
+  # schedule:
+  #   - cron: '10 14 * * *'
+  # push:
+  #   branches:
+  #     - main
 
 jobs:
   main:
@@ -50,7 +54,7 @@ jobs:
           dst_token: ${{ secrets.GITEE_TOKEN }}
           static_list: ${{ github.event.inputs.repos_mirror_list }}
           mappings: ${{ github.event.inputs.repos_mirror_mappings }}
-          force_update: true
+          force_update: ${{ github.event.inputs.repos_mirror_force_update }}
           debug: true
           timeout: 10
           api_timeout: 10
