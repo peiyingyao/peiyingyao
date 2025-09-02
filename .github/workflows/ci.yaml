@@ -2,9 +2,25 @@ name: ci
 
 on:
   workflow_dispatch:
-  # 每天 6:00 (UTC+8) 触发一次
+    input:
+      github_owner:
+        required: true
+        default: massgravel
+      gitee_owner:
+        required: true
+        default: peiyingyao
+      repos_mirror_list:
+        required: true
+        default: Microsoft-Activation-Scripts,massgrave.dev,activated.win,get.activated.win
+      repos_mirror_mappings:
+        required: true
+        default:
+      repos_mirror_force_update:
+        required: true
+        default: true
+  # 每天 6:10 (UTC+8) 触发一次
   schedule:
-    - cron: '0 14 * * *'
+    - cron: '10 14 * * *'
   push:
     branches:
       - main
@@ -18,7 +34,7 @@ jobs:
       - name: Add token
         uses: actions/checkout@v4
         with:
-          repository: peiyingyao/peiyingyao
+          repository: ${{ GITHUB_REPOSITORY }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set variables
@@ -29,15 +45,16 @@ jobs:
           echo "REPODIR=$PWD" >> $GITHUB_ENV
           echo "::debug"
 
-      - name: Mirror the GitHub repos to Gitee
+      - name: Mirror repositories to Gitee
         uses: Yikun/hub-mirror-action@master
         with:
-          src: github/massgravel
-          dst: gitee/peiyingyao
+          src: github/${{ inputs.github_owner }}
+          dst: gitee/${{ inputs.gitee_owner }}
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}
-          static_list: Microsoft-Activation-Scripts
-          force_update: true
+          static_list: ${{ input.repos_mirror_list }}
+          mappings: ${{ input.repos_mirror_mappings }}
+          force_update: ${{ input.repos_mirror_force_update }}
           debug: true
           timeout: 10
           api_timeout: 10
