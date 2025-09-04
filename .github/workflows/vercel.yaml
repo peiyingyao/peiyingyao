@@ -1,4 +1,4 @@
-name: ci
+name: vercel
 
 on:
   workflow_dispatch:
@@ -10,7 +10,7 @@ on:
   #     - main
 
 jobs:
-  massgravel:
+  vercel:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -27,9 +27,9 @@ jobs:
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           echo "BUILDTIME=$(TZ=Asia/Shanghai date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
           echo "REPODIR=$PWD" >> $GITHUB_ENV
-          echo "GITHUB_OWNER=massgravel" >> $GITHUB_ENV
+          echo "GITHUB_OWNER=vercel" >> $GITHUB_ENV
           echo "GITEE_OWNER=peiyingyao" >> $GITHUB_ENV
-          echo "REPOS_MIRROR_LIST=Microsoft-Activation-Scripts,massgrave.dev,activated.win,get.activated.win" >> $GITHUB_ENV
+          echo "REPOS_MIRROR_LIST=ms" >> $GITHUB_ENV
           echo "REPOS_MIRROR_MAPPINGS=" >> $GITHUB_ENV
           echo "REPOS_MIRROR_FORCE_UPDATE=true" >> $GITHUB_ENV
           echo "::debug"
