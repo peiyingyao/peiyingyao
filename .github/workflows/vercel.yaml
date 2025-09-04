@@ -40,7 +40,7 @@ jobs:
         id: get_release
         run: |
           # 获取最新 release
-          RELEASE=$(curl -s "https://api.github.com/repos/${{env.GITHUB_OWNER}}/${{env.GITHUB_REPO}}/releases" | jq '.[0]')
+          RELEASE=$(curl -s https://api.github.com/repos/vercel/ms/releases | jq '.[0]')
 
           # 提取字段并安全处理（避免控制字符报错）
           TAG_NAME=$(jq -r '.tag_name' <<<"$RELEASE")
