@@ -50,9 +50,9 @@ jobs:
 
           echo "GITEE_TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
           echo "GITEE_RELEASE_NAME=$RELEASE_NAME" >> $GITHUB_ENV
-          echo "GITEE_RELEASE_BODY<<EOF" >> $GITHUB_ENV
-          echo "$RELEASE_BODY" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+          # echo "GITEE_RELEASE_BODY<<EOF" >> $GITHUB_ENV
+          # echo "$RELEASE_BODY" >> $GITHUB_ENV
+          # echo "EOF" >> $GITHUB_ENV
           echo "GITEE_TARGET_COMMITISH=$TARGET_COMMITISH" >> $GITHUB_ENV
 
           # 下载 release assets
