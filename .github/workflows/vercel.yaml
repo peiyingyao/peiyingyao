@@ -42,22 +42,22 @@ jobs:
           # 获取最新 release
           RELEASE=$(curl -s https://api.github.com/repos/vercel/ms/releases | jq '.[0]')
 
-          # 提取字段并安全处理（避免控制字符报错）
+          # 提取字段（安全处理控制字符）
           TAG_NAME=$(jq -r '.tag_name' <<<"$RELEASE")
-          RELEASE_NAME=$(jq -r '.name' <<<"$RELEASE")
-          RELEASE_BODY=$(jq -r '.body' <<<"$RELEASE")
+          RELEASE_NAME=$(jq -r '.name | @text' <<<"$RELEASE")
+          RELEASE_BODY=$(jq -r '.body | @text' <<<"$RELEASE")
           TARGET_COMMITISH=$(jq -r '.target_commitish' <<<"$RELEASE")
 
           echo "GITEE_TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
           echo "GITEE_RELEASE_NAME=$RELEASE_NAME" >> $GITHUB_ENV
-          # echo "GITEE_RELEASE_BODY<<EOF" >> $GITHUB_ENV
-          # echo "$RELEASE_BODY" >> $GITHUB_ENV
-          # echo "EOF" >> $GITHUB_ENV
+          echo "GITEE_RELEASE_BODY<<EOF" >> $GITHUB_ENV
+          echo "$RELEASE_BODY" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
           echo "GITEE_TARGET_COMMITISH=$TARGET_COMMITISH" >> $GITHUB_ENV
 
           # 下载 release assets
           mkdir -p dist
-          ASSET_URLS=$(echo "$RELEASE" | jq -r '.assets[].browser_download_url')
+          ASSET_URLS=$(jq -r '.assets[].browser_download_url' <<<"$RELEASE")
 
           if [ -n "$ASSET_URLS" ]; then
             echo "$ASSET_URLS" | while IFS= read -r url; do
