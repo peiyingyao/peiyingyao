@@ -73,8 +73,8 @@ jobs:
 
       - name: Create release on Gitee
         run: |
-          echo GITEE_TAG_NAME ${{ GITEE_TAG_NAME }}
-          echo GITEE_RELEASE_NAME ${{ GITEE_RELEASE_NAME }}
-          echo GITEE_RELEASE_BODY ${{ GITEE_RELEASE_BODY }}
-          echo GITEE_TARGET_COMMITISH ${{ GITEE_TARGET_COMMITISH }}
-          echo GITEE_FILES ${{ GITEE_FILES }}
+          echo GITEE_TAG_NAME ${{ env.GITEE_TAG_NAME }}
+          echo GITEE_RELEASE_NAME ${{ env.GITEE_RELEASE_NAME }}
+          echo GITEE_RELEASE_BODY ${{ env.GITEE_RELEASE_BODY }}
+          echo GITEE_TARGET_COMMITISH ${{ env.GITEE_TARGET_COMMITISH }}
+          echo GITEE_FILES ${{ env.GITEE_FILES }}
