@@ -49,9 +49,13 @@ jobs:
           TARGET_COMMITISH=$(jq -r '.target_commitish' <<<"$RELEASE")
 
           echo "GITEE_TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
+          echo '"GITEE_TAG_NAME=$TAG_NAME" >> $GITHUB_ENV'
           echo "GITEE_RELEASE_NAME=$RELEASE_NAME" >> $GITHUB_ENV
+          echo '"GITEE_RELEASE_NAME=$RELEASE_NAME" >> $GITHUB_ENV'
           echo "GITEE_RELEASE_BODY=$RELEASE_BODY" >> $GITHUB_ENV
+          echo '"GITEE_RELEASE_BODY=$RELEASE_BODY" >> $GITHUB_ENV'
           echo "GITEE_TARGET_COMMITISH=$TARGET_COMMITISH" >> $GITHUB_ENV
+          echo '"GITEE_TARGET_COMMITISH=$TARGET_COMMITISH" >> $GITHUB_ENV'
 
           # 下载 release assets
           mkdir -p dist
@@ -71,10 +75,10 @@ jobs:
             echo "GITEE_FILES=" >> $GITHUB_ENV
           fi
 
-      # - name: Create release on Gitee
-      #   run: |
-      #     echo GITEE_TAG_NAME ${{ env.GITEE_TAG_NAME }}
-      #     echo GITEE_RELEASE_NAME ${{ env.GITEE_RELEASE_NAME }}
-      #     echo GITEE_RELEASE_BODY ${{ env.GITEE_RELEASE_BODY }}
-      #     echo GITEE_TARGET_COMMITISH ${{ env.GITEE_TARGET_COMMITISH }}
-      #     echo GITEE_FILES ${{ env.GITEE_FILES }}
+      - name: Create release on Gitee
+        run: |
+          echo GITEE_TAG_NAME ${{ env.GITEE_TAG_NAME }}
+          echo GITEE_RELEASE_NAME ${{ env.GITEE_RELEASE_NAME }}
+          echo GITEE_RELEASE_BODY ${{ env.GITEE_RELEASE_BODY }}
+          echo GITEE_TARGET_COMMITISH ${{ env.GITEE_TARGET_COMMITISH }}
+          echo GITEE_FILES ${{ env.GITEE_FILES }}
