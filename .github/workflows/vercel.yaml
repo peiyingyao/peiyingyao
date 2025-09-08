@@ -50,9 +50,7 @@ jobs:
 
           echo "GITEE_TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
           echo "GITEE_RELEASE_NAME=$RELEASE_NAME" >> $GITHUB_ENV
-          echo "GITEE_RELEASE_BODY<<EOF" >> $GITHUB_ENV
-          echo "$RELEASE_BODY" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+          echo "GITEE_RELEASE_BODY=$RELEASE_BODY" >> $GITHUB_ENV
           echo "GITEE_TARGET_COMMITISH=$TARGET_COMMITISH" >> $GITHUB_ENV
 
           # 下载 release assets
@@ -72,3 +70,11 @@ jobs:
           else
             echo "GITEE_FILES=" >> $GITHUB_ENV
           fi
+
+      - name: Create release on Gitee
+        run: |
+          echo GITEE_TAG_NAME ${{ GITEE_TAG_NAME }}
+          echo GITEE_RELEASE_NAME ${{ GITEE_RELEASE_NAME }}
+          echo GITEE_RELEASE_BODY ${{ GITEE_RELEASE_BODY }}
+          echo GITEE_TARGET_COMMITISH ${{ GITEE_TARGET_COMMITISH }}
+          echo GITEE_FILES ${{ GITEE_FILES }}
