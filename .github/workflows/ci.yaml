@@ -21,7 +21,7 @@ jobs:
           repository: ${{ github.repository }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set variables
+      - name: Set massgravel to peiyingyao variables
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -30,6 +30,32 @@ jobs:
           echo "GITHUB_OWNER=massgravel" >> $GITHUB_ENV
           echo "GITEE_OWNER=peiyingyao" >> $GITHUB_ENV
           echo "REPOS_MIRROR_LIST=Microsoft-Activation-Scripts,massgrave.dev,activated.win,get.activated.win" >> $GITHUB_ENV
+          echo "REPOS_MIRROR_MAPPINGS=" >> $GITHUB_ENV
+          echo "REPOS_MIRROR_FORCE_UPDATE=true" >> $GITHUB_ENV
+          echo "::debug"
+
+      - name: Mirror repositories to Gitee
+        uses: Yikun/hub-mirror-action@master
+        with:
+          src: github/${{ env.GITHUB_OWNER }}
+          dst: gitee/${{ env.GITEE_OWNER }}
+          dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+          dst_token: ${{ secrets.GITEE_TOKEN }}
+          static_list: ${{ env.REPOS_MIRROR_LIST }}
+          mappings: ${{ env.REPOS_MIRROR_MAPPINGS }}
+          force_update: ${{ env.REPOS_MIRROR_FORCE_UPDATE }}
+          debug: true
+          timeout: 60
+
+      - name: Set ACT-02 to peiyingyao variables
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          echo "BUILDTIME=$(TZ=Asia/Shanghai date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
+          echo "REPODIR=$PWD" >> $GITHUB_ENV
+          echo "GITHUB_OWNER=ACT-02" >> $GITHUB_ENV
+          echo "GITEE_OWNER=peiyingyao" >> $GITHUB_ENV
+          echo "REPOS_MIRROR_LIST=PingFang-for-Windows" >> $GITHUB_ENV
           echo "REPOS_MIRROR_MAPPINGS=" >> $GITHUB_ENV
           echo "REPOS_MIRROR_FORCE_UPDATE=true" >> $GITHUB_ENV
           echo "::debug"
